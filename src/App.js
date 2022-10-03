@@ -17,7 +17,11 @@ const rotationAnimation = keyframes`
     transform: rotate(0deg);
     border-radius: 0;
   }
-
+`;
+// Emoji라는 스타일드 컴포넌트와 실제 적용된 html이 다를 때 스타일이 적용되지 않는데,
+// 이런 경우 Box 컴포넌트 안에 직접 Emoji의 태그를 넣으면 실행 됨
+const Emoji = styled.span`
+  font-size: 36px;
 `;
 
 const Box = styled.div`
@@ -28,13 +32,10 @@ const Box = styled.div`
   justify-content: center;
   align-items: center;
   animation: ${rotationAnimation} 3s linear infinite;
-  span {
-    font-size: 36px;
+  // 직접 Emoji 태그 넣기
+  ${Emoji} {
     &:hover {
-      font-size: 50px;
-    }
-    &:active {
-      opacity: 0;
+      font-size: 98px;
     }
   }
 `;
@@ -43,8 +44,9 @@ function App() {
   return (
     <Father as='header'>
       <Box>
-        <span>😆</span>
+        <Emoji>😆</Emoji>
       </Box>
+      <Emoji>😆</Emoji>
     </Father>
   );
 }

@@ -7,12 +7,14 @@ const Container = styled.div`
   max-width: 480px;
   margin: 0 auto;
 `;
+
 const Header = styled.header`
-  height: 10vh;
+  height: 20vh;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
+
 const CoinsList = styled.ul``;
 
 const Coin = styled.li`
@@ -21,9 +23,10 @@ const Coin = styled.li`
   border-radius: 15px;
   margin-bottom: 10px;
   a {
+    display: flex;
+    align-items: center;
     padding: 20px;
     transition: color 0.2s ease-in;
-    display: block;
   }
   &:hover {
     a {
@@ -42,6 +45,12 @@ const Loader = styled.span`
   display: block;
 `;
 
+const Img = styled.img`
+  width: 35px;
+  height: 35px;
+  margin-right: 10px;
+`;
+
 interface CoinInterface {
   id: string;
   name: string;
@@ -55,10 +64,9 @@ interface CoinInterface {
 const Coins = () => {
   const [coins, setCoins] = useState<CoinInterface[]>([]);
   const [loading, setLoading] = useState(true);
-
   useEffect(() => {
     (async () => {
-      const response = await fetch(`https://api.coinpaprika.com/v1/coins`);
+      const response = await fetch('https://api.coinpaprika.com/v1/coins');
       const json = await response.json();
       setCoins(json.slice(0, 100));
       setLoading(false);
@@ -76,7 +84,16 @@ const Coins = () => {
         <CoinsList>
           {coins.map((coin) => (
             <Coin key={coin.id}>
-              <Link to={`/${coin.id}`}>{coin.name} &rarr;</Link>
+              <Link
+                to={`/${coin.id}`}
+                state={{ name: coin.name, rank: coin.rank }}
+              >
+                <Img
+                  src={`https://coinicons-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
+                  alt='coinSymbol'
+                />
+                {coin.name} &rarr;
+              </Link>
             </Coin>
           ))}
         </CoinsList>

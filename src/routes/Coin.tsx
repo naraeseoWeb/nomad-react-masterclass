@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
+import { fetchCoinInfo, fetchCoinTickers } from '../api';
 import { Link, useMatch } from 'react-router-dom';
 import { Route, Routes, useLocation, useParams } from 'react-router-dom';
 import styled from 'styled-components';
-import { fetchCoinInfo, fetchCoinTickers } from '../api';
 import Chart from './Chart';
 import Price from './Price';
 
@@ -212,7 +212,7 @@ const Coin = () => {
             </Tab>
           </Tabs>
           <Routes>
-            <Route path='chart' element={<Chart />}></Route>
+            <Route path='chart' element={<Chart coinId={coinId!} />}></Route>
             <Route path='price' element={<Price />}></Route>
           </Routes>
         </>

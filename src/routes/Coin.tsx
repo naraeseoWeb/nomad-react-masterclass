@@ -205,7 +205,7 @@ const Coin = () => {
       </HelmetProvider>
       <Header>
         <HomeBtn>
-          <Link to={'/'}>&larr; Home</Link>
+          <Link to={`${process.env.PUBLIC_URL}/`}>&larr; Home</Link>
         </HomeBtn>
         <Title>
           {state?.name ? state.name : loading ? 'Loading...' : infoData?.name}

@@ -4,7 +4,10 @@
 
 2주 챌린지와 함께하는 넷플릭스 만들기
 
+바로가기: https://naraeseoWeb.github.io/nomad-react-masterclass
+
 #### Stacks
+
 <div>
   <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=black"/>
   <img src="https://img.shields.io/badge/Typescript-3178C6?style=flat-square&logo=Typescript&logoColor=white"/>

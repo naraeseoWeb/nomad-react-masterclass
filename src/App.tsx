@@ -5,7 +5,6 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { darkTheme, lightTheme } from './theme';
 import { ThemeProvider } from 'styled-components';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 
 const queryClient = new QueryClient();
 

@@ -9,7 +9,7 @@ import { useState } from 'react';
 const queryClient = new QueryClient();
 
 const GlobalStyle = createGlobalStyle`
-  @import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Condensed:wght@300&family=Source+Sans+Pro:wght@300;400&display=swap');
+  /* @import url('https://fonts.googleapis.com/css2?family=Encode+Sans+Condensed:wght@300&family=Source+Sans+Pro:wght@300;400&display=swap'); */
   html, body, div, span, applet, object, iframe,
   h1, h2, h3, h4, h5, h6, p, blockquote, pre,
   a, abbr, acronym, address, big, cite, code,
@@ -103,7 +103,7 @@ function App() {
           <ThemeBtn onClick={toggleDarkMode}>
             {isDarkMode ? 'Light Mode' : 'Dark Mode'}
           </ThemeBtn>
-          <ReactQueryDevtools initialIsOpen={true} />
+          <ReactQueryDevtools initialIsOpen={false} />
         </ThemeProvider>
       </QueryClientProvider>
     </>

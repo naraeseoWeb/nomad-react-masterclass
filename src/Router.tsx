@@ -7,7 +7,7 @@ const Router = () => {
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
         <Route path='/:coinId/*' element={<Coin />}></Route>
-        <Route path={`/`} element={<Coins />}></Route>
+        <Route path={'/'} element={<Coins />}></Route>
       </Routes>
     </BrowserRouter>
   );

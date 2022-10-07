@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { fetchCoinInfo, fetchCoinTickers } from '../api';
+import { Helmet } from 'react-helmet';
 import { Link, useMatch } from 'react-router-dom';
 import { Route, Routes, useLocation, useParams } from 'react-router-dom';
 import styled from 'styled-components';
@@ -173,6 +174,11 @@ const Coin = () => {
 
   return (
     <Container>
+      <Helmet>
+        <title>
+          {state?.name ? state.name : loading ? 'Loading...' : infoData?.name}
+        </title>
+      </Helmet>
       <Header>
         <Title>
           {state?.name ? state.name : loading ? 'Loading...' : infoData?.name}

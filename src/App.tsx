@@ -1,7 +1,11 @@
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import Router from './Router';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { darkTheme, lightTheme } from './theme';
+import { ThemeProvider } from 'styled-components';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 const queryClient = new QueryClient();
 
@@ -68,13 +72,40 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
+const ThemeBtn = styled.button`
+  position: absolute;
+  transform: translate(-50%, 0);
+  left: 50%;
+  border: none;
+  outline: 0;
+  font: inherit;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: ${(props) => props.theme.textColor};
+  padding: 0.5rem 1rem;
+  font-size: 12px;
+  border-radius: 5px;
+  font-weight: bold;
+`;
+
 function App() {
+  const [isDarkMode, setIsDarkMode] = useState(false);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode((prev) => !prev);
+  };
+
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <GlobalStyle />
-        <Router />
-        <ReactQueryDevtools initialIsOpen={true} />
+        <ThemeProvider theme={isDarkMode ? darkTheme : lightTheme}>
+          <GlobalStyle />
+          <Router />
+          <ThemeBtn onClick={toggleDarkMode}>
+            {isDarkMode ? 'Light Mode' : 'Dark Mode'}
+          </ThemeBtn>
+          <ReactQueryDevtools initialIsOpen={true} />
+        </ThemeProvider>
       </QueryClientProvider>
     </>
   );

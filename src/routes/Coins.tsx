@@ -1,6 +1,6 @@
 // import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { Helmet } from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { fetchCoins } from '../api';
@@ -79,9 +79,11 @@ const Coins = () => {
 
   return (
     <Container>
-      <Helmet>
-        <title>Coins</title>
-      </Helmet>
+      <HelmetProvider>
+        <Helmet>
+          <title>Coins</title>
+        </Helmet>
+      </HelmetProvider>
       <Header>
         <Title>Coins</Title>
       </Header>

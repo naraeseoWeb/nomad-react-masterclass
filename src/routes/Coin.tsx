@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query';
 import { fetchCoinInfo, fetchCoinTickers } from '../api';
-import { Helmet } from 'react-helmet';
 import { Link, useMatch } from 'react-router-dom';
 import { Route, Routes, useLocation, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import Chart from './Chart';
 import Price from './Price';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 const Container = styled.div`
   padding: 0px 40px;
@@ -18,6 +18,27 @@ const Header = styled.header`
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
+`;
+
+const Button = styled.button`
+  border: none;
+  outline: 0;
+  font: inherit;
+  cursor: pointer;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: ${(props) => props.theme.textColor};
+  padding: 0.5rem 1rem;
+  font-size: 12px;
+  border-radius: 5px;
+  font-weight: bold;
+`;
+
+const HomeBtn = styled(Button)`
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translate(0, -50%);
 `;
 
 const Title = styled.h1`
@@ -76,6 +97,7 @@ const Tab = styled.span<{ isActive: boolean }>`
     color: inherit;
   }
 `;
+
 interface RouterState {
   name: string;
 }
@@ -174,12 +196,17 @@ const Coin = () => {
 
   return (
     <Container>
-      <Helmet>
-        <title>
-          {state?.name ? state.name : loading ? 'Loading...' : infoData?.name}
-        </title>
-      </Helmet>
+      <HelmetProvider>
+        <Helmet>
+          <title>
+            {state?.name ? state.name : loading ? 'Loading...' : infoData?.name}
+          </title>
+        </Helmet>
+      </HelmetProvider>
       <Header>
+        <HomeBtn>
+          <Link to={'/'}>&larr; Home</Link>
+        </HomeBtn>
         <Title>
           {state?.name ? state.name : loading ? 'Loading...' : infoData?.name}
         </Title>

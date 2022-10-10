@@ -144,7 +144,11 @@ interface TickersData {
   };
 }
 
-const Coin = () => {
+interface ICoinProp {
+  isDark: boolean;
+}
+
+const Coin = ({ isDark }: ICoinProp) => {
   const { coinId } = useParams();
   const location = useLocation();
   const state = location.state as RouterState;
@@ -215,7 +219,10 @@ const Coin = () => {
             </Tab>
           </Tabs>
           <Routes>
-            <Route path='chart' element={<Chart coinId={coinId!} />}></Route>
+            <Route
+              path='chart'
+              element={<Chart coinId={coinId!} isDark={isDark} />}
+            ></Route>
             <Route path='price' element={<Price />}></Route>
           </Routes>
         </>

@@ -1,7 +1,13 @@
 import { useQuery } from '@tanstack/react-query';
 import { fetchCoinInfo, fetchCoinTickers } from '../api';
-import { Link, useMatch } from 'react-router-dom';
-import { Route, Routes, useLocation, useParams } from 'react-router-dom';
+import {
+  Route,
+  Routes,
+  useLocation,
+  useParams,
+  Link,
+  useMatch,
+} from 'react-router-dom';
 import styled from 'styled-components';
 import Chart from './Chart';
 import Price from './Price';
@@ -21,29 +27,10 @@ const Header = styled.header`
   position: relative;
 `;
 
-const Button = styled.button`
-  border: none;
-  outline: 0;
-  font: inherit;
-  cursor: pointer;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: ${(props) => props.theme.textColor};
-  padding: 0.5rem 1rem;
-  font-size: 12px;
-  border-radius: 5px;
-  font-weight: bold;
-`;
-
-const HomeBtn = styled(Button)`
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translate(0, -50%);
-`;
-
 const Title = styled.h1`
   font-size: 48px;
   align-items: center;
+  color: ${(props) => props.theme.accentColor};
 `;
 
 const Loader = styled.span`
@@ -63,6 +50,7 @@ const OverviewItem = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 33%;
   span:first-child {
     font-size: 10px;
     font-weight: 400;
@@ -94,10 +82,10 @@ const Tab = styled.span<{ isActive: boolean }>`
     props.isActive ? props.theme.accentColor : props.theme.textColor};
   a {
     display: block;
+    padding: 7px 0;
     color: inherit;
   }
 `;
-
 interface RouterState {
   name: string;
 }
@@ -170,27 +158,8 @@ const Coin = () => {
     useQuery<TickersData>(
       ['tickers', coinId],
       () => fetchCoinTickers(coinId!),
-      { refetchInterval: 10000 }
+      { refetchInterval: 5000 }
     );
-
-  /*  
-  const [loading, setLoading] = useState(true);
-  const [info, setInfo] = useState<InfoData>();
-  const [priceInfo, setPriceInfo] = useState<PriceData>();
-
-  useEffect(() => {
-    (async () => {
-      const infoData = await (
-        await fetch(`https://api.coinpaprika.com/v1/coins/${coinId}`)
-      ).json();
-      const priceData = await (
-        await fetch(`https://api.coinpaprika.com/v1/tickers/${coinId}`)
-      ).json();
-      setInfo(infoData);
-      setPriceInfo(priceData);
-      setLoading(false);
-    })();
-  }, [coinId]); */
 
   const loading = infoLoading || tickersLoading;
 
@@ -204,9 +173,6 @@ const Coin = () => {
         </Helmet>
       </HelmetProvider>
       <Header>
-        <HomeBtn>
-          <Link to={'/'}>&larr; Home</Link>
-        </HomeBtn>
         <Title>
           {state?.name ? state.name : loading ? 'Loading...' : infoData?.name}
         </Title>
@@ -226,7 +192,7 @@ const Coin = () => {
             </OverviewItem>
             <OverviewItem>
               <span>Price: </span>
-              <span>$ {tickersData?.quotes.USD.price.toFixed(3)}</span>
+              <span>$ {tickersData?.quotes?.USD?.price?.toFixed(3)}</span>
             </OverviewItem>
           </Overview>
           <Description>{infoData?.description}</Description>
@@ -250,7 +216,7 @@ const Coin = () => {
           </Tabs>
           <Routes>
             <Route path='chart' element={<Chart coinId={coinId!} />}></Route>
-            <Route path='price' element={<Price coinId={coinId!} />}></Route>
+            <Route path='price' element={<Price />}></Route>
           </Routes>
         </>
       )}

@@ -43,6 +43,7 @@ type IFormData = {
   username: string;
   password: string;
   password1: string;
+  extraError?: string;
 };
 
 const ToDoList = () => {
@@ -50,9 +51,17 @@ const ToDoList = () => {
     register,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<IFormData>({ defaultValues: { email: '@naver.com' } });
-  const onValid = (data: any) => {
-    console.log(data);
+  const onValid = (data: IFormData) => {
+    if (data.password !== data.password1) {
+      return setError(
+        'password1',
+        { message: 'Passwords are not the same' },
+        { shouldFocus: true }
+      );
+    }
+    setError('extraError', { message: 'Server offline.' });
   };
   console.log(errors);
 
@@ -74,7 +83,14 @@ const ToDoList = () => {
         />
         <span>{errors?.email?.message}</span>
         <input
-          {...register('firstName', { required: 'This arae is required' })}
+          {...register('firstName', {
+            required: 'This arae is required',
+            validate: {
+              noNico: (value) =>
+                value.includes('nico') ? 'No nicos allowed' : true,
+              noNick: (value) => !value.includes('nick') || 'No nicks allowed',
+            },
+          })}
           placeholder='First Name'
         />
         <span>{errors?.firstName?.message}</span>
@@ -86,7 +102,10 @@ const ToDoList = () => {
         <input
           {...register('username', {
             required: 'This arae is required',
-            minLength: 5,
+            minLength: {
+              value: 5,
+              message: 'username is too short',
+            },
           })}
           placeholder='User Name'
         />
@@ -106,13 +125,16 @@ const ToDoList = () => {
         <input
           {...register('password1', {
             required: 'This arae is required',
-            minLength: 5,
+            minLength: {
+              value: 5,
+              message: 'Your password is too short',
+            },
           })}
           placeholder='Password 1'
         />
         <span>{errors?.password1?.message}</span>
-
         <button>Add</button>
+        <span>{errors?.extraError?.message}</span>
       </form>
     </div>
   );

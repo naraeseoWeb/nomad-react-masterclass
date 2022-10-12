@@ -69,7 +69,7 @@ function App() {
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Routes>
-        <Route path='/to-do-list/*' element={<ToDoList />} />
+        <Route path='/' element={<ToDoList />} />
       </Routes>
       <GlobalStyle />
     </BrowserRouter>

@@ -2,7 +2,7 @@ import { atom, selector } from 'recoil';
 import { recoilPersist } from 'recoil-persist';
 
 const { persistAtom } = recoilPersist({
-  key: 'todo-persist',
+  key: 'to-do-persist',
   storage: localStorage,
 });
 

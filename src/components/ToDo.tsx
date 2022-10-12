@@ -1,3 +1,4 @@
+import React from 'react';
 import { useSetRecoilState } from 'recoil';
 import { Categories, IToDo, toDoState } from './atoms';
 
@@ -13,6 +14,15 @@ const ToDo = ({ text, category, id }: IToDo) => {
       return [
         ...oldToDos.slice(0, targetIndex),
         newToDo,
+        ...oldToDos.slice(targetIndex + 1),
+      ];
+    });
+  };
+  const deleteHandler = () => {
+    setToDos((oldToDos) => {
+      const targetIndex = oldToDos.findIndex((toDo) => toDo.id === id);
+      return [
+        ...oldToDos.slice(0, targetIndex),
         ...oldToDos.slice(targetIndex + 1),
       ];
     });
@@ -36,6 +46,7 @@ const ToDo = ({ text, category, id }: IToDo) => {
           Done
         </button>
       )}
+      <button onClick={deleteHandler}>Delete</button>
     </li>
   );
 };

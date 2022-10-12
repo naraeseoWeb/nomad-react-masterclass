@@ -11,6 +11,7 @@ const ToDoList = () => {
   const onInput = (event: React.FormEvent<HTMLSelectElement>) => {
     setCategory(event.currentTarget.value as any);
   };
+  // console.log(toDos, 'toDos');
 
   return (
     <div>

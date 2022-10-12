@@ -15,12 +15,12 @@ export enum Categories {
 export interface IToDo {
   id: number;
   text: string;
-  category: Categories;
+  category: string;
 }
 
-export const categoryState = atom<Categories>({
+export const categoryState = atom({
   key: 'category',
-  default: Categories.TO_DO,
+  default: 'TO_DO',
 });
 
 export const toDoState = atom<IToDo[]>({

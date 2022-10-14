@@ -1,0 +1,7 @@
+# pack-refs with: peeled fully-peeled sorted 
+d5e9b320659cc852b7061a5a1295f4ad5ce0e386 refs/heads/2-styled-components
+beb3496eeccf83350732edfd5569f02b3cf54bb3 refs/heads/3-TypeScript
+da5d2d321cfdd88829923b3dbc0487609728fcf3 refs/heads/4-CryptoTracker
+acfeebbfce11317cd25e5f31dc26f246508f768e refs/heads/5-CryptoTrackerCompletion
+9856bb8624d1d98bdf35e439d4cd3ed3721d8cf7 refs/heads/gh-pages
+7bfa71be949c7794cdf85ab143024b17155ecef6 refs/heads/main

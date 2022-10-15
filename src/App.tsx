@@ -42,8 +42,22 @@ const Card = styled.div`
 
 const App = () => {
   const [toDos, setToDos] = useRecoilState(toDoState);
-  const onDragEnd = ({ destination, source }: DropResult) => {
-    setToDos((prev) => [...prev.splice(+source.index, +source.index - 1)]);
+  const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
+    if (!destination) return;
+    setToDos((oldToDos) => {
+      const todosCopy = [...oldToDos];
+      // 1) Delete item on source.index
+      console.log('Delete item on', source.index);
+      console.log(todosCopy);
+      todosCopy.splice(source.index, 1);
+      console.log('Deleted item');
+      console.log(todosCopy);
+      // 2) Put back the item on the destination.index
+      console.log('Put back', draggableId, 'on ', destination.index);
+      todosCopy.splice(destination?.index, 0, draggableId);
+      console.log(todosCopy);
+      return todosCopy;
+    });
   };
 
   return (
@@ -54,7 +68,8 @@ const App = () => {
             {(magic) => (
               <Board ref={magic.innerRef} {...magic.droppableProps}>
                 {toDos.map((toDo, index) => (
-                  <Draggable key={index} draggableId={toDo} index={index}>
+                  // key와 draggableId가 동일해야 함
+                  <Draggable key={toDo} draggableId={toDo} index={index}>
                     {(magic) => (
                       <Card
                         ref={magic.innerRef}
@@ -66,7 +81,6 @@ const App = () => {
                     )}
                   </Draggable>
                 ))}
-                {/* 테이블의 크기 유지 시켜줌 */}
                 {magic.placeholder}
               </Board>
             )}

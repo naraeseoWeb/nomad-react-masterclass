@@ -47,15 +47,9 @@ const App = () => {
     setToDos((oldToDos) => {
       const todosCopy = [...oldToDos];
       // 1) Delete item on source.index
-      console.log('Delete item on', source.index);
-      console.log(todosCopy);
       todosCopy.splice(source.index, 1);
-      console.log('Deleted item');
-      console.log(todosCopy);
       // 2) Put back the item on the destination.index
-      console.log('Put back', draggableId, 'on ', destination.index);
       todosCopy.splice(destination?.index, 0, draggableId);
-      console.log(todosCopy);
       return todosCopy;
     });
   };

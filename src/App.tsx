@@ -26,14 +26,6 @@ const App = () => {
   const [toDos, setToDos] = useRecoilState(toDoState);
   const onDragEnd = ({ draggableId, destination, source }: DropResult) => {
     if (!destination) return;
-    /*     setToDos((oldToDos) => {
-      const todosCopy = [...oldToDos];
-      // 1) Delete item on source.index
-      todosCopy.splice(source.index, 1);
-      // 2) Put back the item on the destination.index
-      todosCopy.splice(destination?.index, 0, draggableId);
-      return todosCopy;
-    }); */
   };
 
   return (

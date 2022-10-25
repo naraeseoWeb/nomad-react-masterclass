@@ -24,21 +24,36 @@ const Boards = styled.div`
 
 const App = () => {
   const [toDos, setToDos] = useRecoilState(toDoState);
-  const onDragEnd = ({ draggableId, source, destination }: DropResult) => {
+  const onDragEnd = (info: DropResult) => {
+    console.log(info, 'info');
+    const { destination, draggableId, source } = info;
     if (!destination) return;
-    setToDos((allBoards) => {
-      const copyToDos: any = {};
-      Object.keys(allBoards).forEach((toDosKey) => {
-        copyToDos[toDosKey] = [...allBoards[toDosKey]];
+    if (destination?.droppableId === source.droppableId) {
+      // 1. same board movement.
+      setToDos((allBoards) => {
+        const boardCopy = [...allBoards[source.droppableId]];
+        boardCopy.splice(source.index, 1);
+        boardCopy.splice(destination?.index, 0, draggableId);
+        return {
+          ...allBoards,
+          [source.droppableId]: boardCopy,
+        };
       });
-      copyToDos[source.droppableId].splice(source.index, 1);
-      copyToDos[destination.droppableId].splice(
-        destination.index,
-        0,
-        draggableId
-      );
-      return copyToDos;
-    });
+    }
+    if (destination?.droppableId !== source.droppableId) {
+      // 2. cross board movement
+      setToDos((allBoards) => {
+        const sourceBoard = [...allBoards[source.droppableId]];
+        const destinationBoard = [...allBoards[destination.droppableId]];
+        sourceBoard.splice(source.index, 1);
+        destinationBoard.splice(destination?.index, 0, draggableId);
+        return {
+          ...allBoards,
+          [source.droppableId]: sourceBoard,
+          [destination.droppableId]: destinationBoard,
+        };
+      });
+    }
   };
 
   return (

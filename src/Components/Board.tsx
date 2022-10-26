@@ -1,4 +1,5 @@
 import { Droppable } from '@hello-pangea/dnd';
+import { useRef } from 'react';
 import styled from 'styled-components';
 import DraggableCard from './DraggableCard';
 
@@ -41,9 +42,19 @@ interface IBoardProps {
 }
 
 const Board = ({ toDos, boardId }: IBoardProps) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const onClick = () => {
+    inputRef.current?.focus();
+    setTimeout(() => {
+      inputRef.current?.blur();
+    }, 5000);
+  };
+
   return (
     <Wrapper>
       <Title>{boardId}</Title>
+      <input ref={inputRef} placeholder='grab me' />
+      <button onClick={onClick}>Click me</button>
       <Droppable droppableId={boardId}>
         {(magic, info) => (
           <Area

@@ -1,6 +1,8 @@
 import { Droppable } from '@hello-pangea/dnd';
 import { useForm } from 'react-hook-form';
+import { useSetRecoilState } from 'recoil';
 import styled from 'styled-components';
+import { ITodo, toDoState } from '../atoms';
 import DraggableCard from './DraggableCard';
 
 const Wrapper = styled.div`
@@ -44,7 +46,7 @@ const Area = styled.div<IAreaProps>`
   padding: 20px;
 `;
 interface IBoardProps {
-  toDos: string[];
+  toDos: ITodo[];
   boardId: string;
 }
 
@@ -53,9 +55,19 @@ interface IForm {
 }
 
 const Board = ({ toDos, boardId }: IBoardProps) => {
+  const setToDos = useSetRecoilState(toDoState);
   const { register, setValue, handleSubmit } = useForm<IForm>();
-  const onValid = (data: IForm) => {
-    console.log(data);
+  const onValid = ({ toDo }: IForm) => {
+    const newToDo = {
+      id: Date.now(),
+      text: toDo,
+    };
+    setToDos((allBoards) => {
+      return {
+        ...allBoards,
+        [boardId]: [newToDo, ...allBoards[boardId]],
+      };
+    });
     setValue('toDo', '');
   };
 
@@ -78,7 +90,12 @@ const Board = ({ toDos, boardId }: IBoardProps) => {
             {...magic.droppableProps}
           >
             {toDos.map((toDo, index) => (
-              <DraggableCard key={toDo} toDo={toDo} index={index} />
+              <DraggableCard
+                key={toDo.id}
+                toDoId={toDo.id}
+                toDoText={toDo.text}
+                index={index}
+              />
             ))}
             {magic.placeholder}
           </Area>

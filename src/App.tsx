@@ -28,7 +28,6 @@ const App = () => {
     const { destination, source } = info;
     if (!destination) return;
     if (destination?.droppableId === source.droppableId) {
-      // 1. same board movement.
       setToDos((allBoards) => {
         const boardCopy = [...allBoards[source.droppableId]];
         const taskObj = boardCopy[source.index];
@@ -41,7 +40,6 @@ const App = () => {
       });
     }
     if (destination?.droppableId !== source.droppableId) {
-      // 2. cross board movement
       setToDos((allBoards) => {
         const sourceBoard = [...allBoards[source.droppableId]];
         const taskObj = sourceBoard[source.index];
